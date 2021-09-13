@@ -138,7 +138,6 @@ class CalibrationTutorialPage(Qtw.QWizardPage):
         self.scroll_area.setVerticalScrollBarPolicy(Qtc.Qt.ScrollBarAlwaysOn)
         self.scroll_area.setHorizontalScrollBarPolicy(Qtc.Qt.ScrollBarAlwaysOff)
         self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setMinimumSize(510, 500)
 
         self.scroll_area.setWidget(self.page_container_widget)
 

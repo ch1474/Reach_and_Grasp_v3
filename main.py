@@ -79,6 +79,9 @@ class TrialWizard(Qtw.QWizard):
 
         self.data = []
 
+        self.setGeometry(0,0,700,600)
+        self.setMinimumSize(700,600)
+        self.setMaximumSize(700,600)
 
 
     @Qtc.pyqtSlot(str, float, float, float, bool)
