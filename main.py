@@ -182,6 +182,7 @@ class TrialWizard(Qtw.QWizard):
         super(TrialWizard, self).accept()
 
         self.pupil_handler.stop_recording()
+        self.leap_handler.kill_all_open()
 
         participant_id = self.field('intro.participantID')
         filename = self.startingTime + "_" + participant_id
@@ -244,6 +245,7 @@ class TrialWizard(Qtw.QWizard):
 
         for drive in self.drives:
             shutil.copyfile(leap_timestamps, drive + path + filename + "_leap_timestamps.csv")
+
 
         os.remove(leap_timestamps)
 
