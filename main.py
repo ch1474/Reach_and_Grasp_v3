@@ -254,7 +254,7 @@ class TrialWizard(Qtw.QWizard):
         leap_data = self.startingTime + "_leap_data.csv"
 
         for drive in self.drives:
-            shutil.copyfile(leap_timestamps, drive + path + filename + "_leap_data.csv")
+            shutil.copyfile(leap_data, drive + path + filename + "_leap_data.csv")
 
         os.remove(leap_data)
 
