@@ -30,10 +30,9 @@ class TrialWizard(Qtw.QWizard):
     def __init__(self, parent=None):
         super(TrialWizard, self).__init__(parent)
 
-        self.leap_handler = LeapHandler("CallbackSample.exe", "test")
-        self.pupil_handler = PupilHandler()
-
         self.startingTime = time.strftime("%Y%m%d-%H%M%S")
+        self.leap_handler = LeapHandler("CallbackSample.exe", self.startingTime)
+        self.pupil_handler = PupilHandler()
 
         self.setWizardStyle(Qtw.QWizard.ModernStyle)
         self.setPixmap(Qtw.QWizard.LogoPixmap, Qtg.QPixmap('images/clearsky-logo.png'))
@@ -237,7 +236,7 @@ class TrialWizard(Qtw.QWizard):
         # tone_timestamps_df.columns = ["recording", "timestamp"]
 
         for drive in self.drives:
-            data_df.to_csv(drive + path + filename + '_tone_timestamps.csv', header=None)
+            data_df.to_csv(drive + path + filename + '_tone_timestamps.csv')
 
         # Leap timestamps
 
