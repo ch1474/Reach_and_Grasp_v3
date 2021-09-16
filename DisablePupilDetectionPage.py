@@ -10,8 +10,7 @@ class GifLayout(Qtw.QVBoxLayout):
     def __init__(self, heading, text, gifs):
         super(GifLayout, self).__init__()
 
-        label_heading_font = Qtg.QFont('Times', 10)
-        label_heading_font.setBold(True)
+        label_heading_font = Qtg.QFont('Times', 15)
         self.label_heading = Qtw.QLabel(heading)
         self.label_heading.setFont(label_heading_font)
 
@@ -28,7 +27,7 @@ class GifLayout(Qtw.QVBoxLayout):
             self.gif.start()
             self.addWidget(self.gif_label)
 
-        self.setSpacing(20)
+        self.setSpacing(15)
         self.addStretch()
 
 
@@ -48,7 +47,7 @@ class DisablePupilDetectionPage(Qtw.QWizardPage):
         self.disable_text = "Pupil detection is disabled to ensure the stability of the recording. Go to <b>General " \
                             "settings</b> in Pupil Capture and turn off <b>Pupil detection</b> as shown below. "
 
-        self.disable_gif = GifLayout("Disable Pupil Detection", self.disable_text,
+        self.disable_gif = GifLayout("6. Disable Pupil Detection", self.disable_text,
                                      ["gifs/turning_off_pupil_detection.gif"])
 
 

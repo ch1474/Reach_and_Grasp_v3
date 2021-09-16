@@ -11,6 +11,15 @@ class TrialInfoPage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
+        page_title = "2. Patient information"
+        page_title_label = Qtw.QLabel(page_title)
+        page_title_font = Qtg.QFont('times', 15)
+        page_title_label.setFont(page_title_font)
+
+        page_text = "Please enter the specified information in the form. Enter any additional information in the " \
+                    "notes section. An ID is required to continue. "
+        page_text_label = Qtw.QLabel(page_text, wordWrap=True)
+
         participant_id_line_edit = Qtw.QLineEdit()
 
         group_combo_box = Qtw.QComboBox()
@@ -41,19 +50,31 @@ class TrialInfoPage(Qtw.QWizardPage):
         self.registerField('intro.acuity', acuity_line_edit)
         self.registerField('intro.notes', notes_plain_text_edit, "plainText")
 
-        layout = Qtw.QFormLayout()
-        layout.setVerticalSpacing(15)
-        layout.addRow("Participant ID", participant_id_line_edit)
-        layout.addRow("Group", group_combo_box)
-        layout.addRow("Handedness", handedness_combo_box)
-        layout.addRow("MoCA Total Score", moca_spin_box)
-        layout.addRow("SRDS Total Score", srds)
-        layout.addRow("Visual Acuity Score (If applicable)", acuity_line_edit)
-        layout.addRow("Notes", notes_plain_text_edit)
+        form_layout = Qtw.QFormLayout()
+        form_layout.setVerticalSpacing(15)
+        form_layout.addRow("Participant ID", participant_id_line_edit)
+        form_layout.addRow("Group", group_combo_box)
+        form_layout.addRow("Handedness", handedness_combo_box)
+        form_layout.addRow("MoCA Total Score", moca_spin_box)
+        form_layout.addRow("SRDS Total Score", srds)
+        form_layout.addRow("Visual Acuity Score (If applicable)", acuity_line_edit)
+        form_layout.addRow("Notes", notes_plain_text_edit)
 
-        layout_group_box = Qtw.QGroupBox()
-        layout_group_box.setLayout(layout)
+        page_layout = Qtw.QVBoxLayout()
+        page_layout.setSpacing(15)
+        page_layout.addWidget(page_title_label)
+        page_layout.addWidget(page_text_label)
+        page_layout.addLayout(form_layout)
+        self.setLayout(page_layout)
 
-        widget_layout = Qtw.QVBoxLayout()
-        widget_layout.addWidget(layout_group_box)
-        self.setLayout(widget_layout)
+
+if __name__ == "__main__":
+    app = Qtw.QApplication([])
+
+    wizard = Qtw.QWizard()
+    wizard.addPage(TrialInfoPage(wizard))
+
+    wizard.setWindowTitle("Trivial Wizard")
+    wizard.show()
+
+    app.exec()

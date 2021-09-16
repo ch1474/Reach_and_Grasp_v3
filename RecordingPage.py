@@ -23,6 +23,16 @@ class RecordingPage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
+        if test_type == "Memory ":
+            page_title = Qtw.QLabel("11. Memory assessment")
+            page_title_font = Qtg.QFont('Times', 15)
+            page_title.setFont(page_title_font)
+        else:
+            page_title = Qtw.QLabel("9. Visual assessment")
+            page_title_font = Qtg.QFont('Times', 15)
+            page_title.setFont(page_title_font)
+
+
         self.button_label_1 = Qtw.QLabel(test_type + "Reach and Grasp 1:")
         self.push_button_1 = Qtw.QPushButton("Start")
         self.push_button_1.setCheckable(True)
@@ -49,6 +59,8 @@ class RecordingPage(Qtw.QWizardPage):
         self.push_button_5.clicked.connect(lambda: self.pushbutton(test_type + "Reach and Grasp 5", self.push_button_5))
 
         page_layout = Qtw.QVBoxLayout()
+        page_layout.setSpacing(15)
+        page_layout.addWidget(page_title)
         page_layout.addWidget(self.button_label_1)
         page_layout.addWidget(self.push_button_1)
         page_layout.addWidget(self.label_2)
@@ -133,7 +145,7 @@ if __name__ == "__main__":
     app = Qtw.QApplication([])
 
     wizard = Qtw.QWizard()
-    wizard.addPage(RecordingPage(wizard, "Memory "))
+    wizard.addPage(RecordingPage(wizard, "Visual "))
 
     wizard.setWindowTitle("Trivial Wizard")
     wizard.show()

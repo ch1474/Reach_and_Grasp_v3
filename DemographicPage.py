@@ -10,6 +10,14 @@ class DemographicPage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
+        page_title = "3. Demographic information"
+        page_title_label = Qtw.QLabel(page_title)
+        page_title_font = Qtg.QFont('times', 15)
+        page_title_label.setFont(page_title_font)
+
+        page_text = "Please enter the specified information in the form."
+        page_text_label = Qtw.QLabel(page_text, wordWrap=True)
+
         age_line_edit = Qtw.QLineEdit()
         age_line_edit.setValidator(Qtg.QRegExpValidator(Qtc.QRegExp("[0-9]*[.]*[0-9]*")))
 
@@ -24,8 +32,28 @@ class DemographicPage(Qtw.QWizardPage):
         self.registerField('demographic.sex', sex_combo_box, "currentText")
         self.registerField('demographic.education', education_line_edit)
 
-        layout = Qtw.QFormLayout()
-        layout.addRow("Age", age_line_edit)
-        layout.addRow("Sex", sex_combo_box)
-        layout.addRow("Years of education", education_line_edit)
-        self.setLayout(layout)
+        form_layout = Qtw.QFormLayout()
+        form_layout.setSpacing(15)
+        form_layout.addRow("Age", age_line_edit)
+        form_layout.addRow("Sex", sex_combo_box)
+        form_layout.addRow("Years of education", education_line_edit)
+
+        page_layout = Qtw.QVBoxLayout()
+        page_layout.setSpacing(15)
+        page_layout.addWidget(page_title_label)
+        page_layout.addWidget(page_text_label)
+        page_layout.addLayout(form_layout)
+
+        self.setLayout(page_layout)
+
+
+if __name__ == "__main__":
+    app = Qtw.QApplication([])
+
+    wizard = Qtw.QWizard()
+    wizard.addPage(DemographicPage(wizard))
+
+    wizard.setWindowTitle("Trivial Wizard")
+    wizard.show()
+
+    app.exec()

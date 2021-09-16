@@ -26,9 +26,9 @@ class OpenSoftwarePage(Qtw.QWizardPage):
 
         self.error_dialog = Qtw.QErrorMessage()
 
-        page_title = "Required Software"
+        page_title = "1. Open required software"
         page_title_label = Qtw.QLabel(page_title)
-        page_title_font = Qtg.QFont('times', 20)
+        page_title_font = Qtg.QFont('times', 15)
         page_title_label.setFont(page_title_font)
 
         page_text = "Please ensure that Leap Motion Visualizer and Pupil Capture are open and have successfully " \
@@ -37,33 +37,45 @@ class OpenSoftwarePage(Qtw.QWizardPage):
 
         leap_visualizer_push_button = Qtw.QPushButton("Open Leap Visualizer")
         leap_visualizer_push_button.clicked.connect(self.open_leap_visualizer)
+        leap_visualizer_push_button.setMinimumSize(250, 20)
 
         self.leap_visualizer_image = Qtw.QLabel()
         self.leap_visualizer_image.setPixmap(Qtg.QPixmap("images/cross.png"))
 
         leap_visualizer_layout = Qtw.QHBoxLayout()
+        leap_visualizer_layout.addStretch()
         leap_visualizer_layout.addWidget(leap_visualizer_push_button)
         leap_visualizer_layout.addWidget(self.leap_visualizer_image)
+        leap_visualizer_layout.addStretch()
 
         pupil_capture_push_button = Qtw.QPushButton("Open Pupil Capture")
         pupil_capture_push_button.clicked.connect(self.open_pupil_capture)
+        pupil_capture_push_button.setMinimumSize(250, 20)
+
 
         self.pupil_capture_image = Qtw.QLabel()
         self.pupil_capture_image.setPixmap(Qtg.QPixmap("images/cross.png"))
 
         pupil_capture_layout = Qtw.QHBoxLayout()
+        pupil_capture_layout.addStretch()
         pupil_capture_layout.addWidget(pupil_capture_push_button)
         pupil_capture_layout.addWidget(self.pupil_capture_image)
+        pupil_capture_layout.addStretch()
 
         page_layout = Qtw.QVBoxLayout()
+        page_layout.setSpacing(15)
         page_layout.addWidget(page_title_label)
         page_layout.addWidget(page_text_label)
         page_layout.addLayout(leap_visualizer_layout)
         page_layout.addLayout(pupil_capture_layout)
 
+
+
         self.setLayout(page_layout)
 
         # Then update using an interval timer
+        self.check_software_status()
+
         interval_seconds = 5
         self.status_timer = Qtc.QTimer()
         self.status_timer.setInterval(interval_seconds * 1000)

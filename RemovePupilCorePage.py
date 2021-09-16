@@ -18,9 +18,8 @@ class RemovePupilCorePage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
-        page_title = Qtw.QLabel("Remove Pupil Core")
+        page_title = Qtw.QLabel("10. Remove Pupil Core")
         page_title_font = Qtg.QFont('Times', 15)
-        page_title_font.setBold(True)
         page_title.setFont(page_title_font)
 
         page_text = "Please remove the Pupil core from the patient, and place on the blindfold for the memory task."
@@ -31,6 +30,7 @@ class RemovePupilCorePage(Qtw.QWizardPage):
         page_image_label.setPixmap(page_image)
 
         page_layout = Qtw.QVBoxLayout()
+        page_layout.setSpacing(15)
         page_layout.addWidget(page_title)
         page_layout.addWidget(page_text_label)
         page_layout.addWidget(page_image_label)

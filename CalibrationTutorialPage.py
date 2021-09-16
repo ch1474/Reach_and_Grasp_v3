@@ -10,8 +10,7 @@ class GifLayout(Qtw.QVBoxLayout):
     def __init__(self, heading, text, gifs):
         super(GifLayout, self).__init__()
 
-        label_heading_font = Qtg.QFont('Times', 10)
-        label_heading_font.setBold(True)
+        label_heading_font = Qtg.QFont('Times', 15)
         self.label_heading = Qtw.QLabel(heading)
         self.label_heading.setFont(label_heading_font)
 
@@ -46,9 +45,8 @@ class CalibrationTutorialPage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
-        page_title = Qtw.QLabel("Calibration and Validation Information")
-        page_title_font = Qtg.QFont('Times', 20)
-        page_title_font.setBold(True)
+        page_title = Qtw.QLabel("7. Calibration and validation information")
+        page_title_font = Qtg.QFont('Times', 15)
         page_title.setFont(page_title_font)
 
         page_text = "In order to know what someone is looking at, we must establish a mapping between pupil and gaze " \
@@ -66,7 +64,6 @@ class CalibrationTutorialPage(Qtw.QWizardPage):
 
         calibration_heading = Qtw.QLabel("Calibration")
         calibration_heading_font = Qtg.QFont('Times', 15)
-        calibration_heading_font.setBold(True)
         calibration_heading.setFont(calibration_heading_font)
 
         calibration_text_1 = "1.\tProp the calibration marker on the object, such that the target is facing the user"
@@ -105,10 +102,11 @@ class CalibrationTutorialPage(Qtw.QWizardPage):
 
         validation_heading = Qtw.QLabel("Validation")
         validation_heading_font = Qtg.QFont('Times', 15)
-        validation_heading_font.setBold(True)
         validation_heading.setFont(validation_heading_font)
 
-        validation_text = "Ask the patient to follow the marker as the test administrator moves it in a circular motion around the table.\n\n Once the marker has finished moving then flip it over to finish validation."
+        validation_text = "Ask the patient to follow the marker as the test administrator moves it in a circular " \
+                          "motion around the table.\n\nOnce the marker has finished moving then flip it over to " \
+                          "finish validation. "
 
         validation_text_label = Qtw.QLabel(validation_text, wordWrap=True)
 
@@ -118,6 +116,7 @@ class CalibrationTutorialPage(Qtw.QWizardPage):
         validation_gif.start()
 
         self.page_layout = Qtw.QVBoxLayout()
+        self.page_layout.setSpacing(15)
         self.page_layout.addWidget(calibration_heading)
         self.page_layout.addWidget(calibration_label_1)
         self.page_layout.addWidget(calibration_start_image_label)
@@ -142,6 +141,7 @@ class CalibrationTutorialPage(Qtw.QWizardPage):
         self.scroll_area.setWidget(self.page_container_widget)
 
         self.page_layout2 = Qtw.QVBoxLayout()
+        self.page_layout2.setSpacing(15)
         self.page_layout2.addWidget(page_title)
         self.page_layout2.addWidget(page_text_label)
         self.page_layout2.addWidget(self.scroll_area)

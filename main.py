@@ -6,6 +6,7 @@ from PyQt5 import QtMultimedia as Qtm
 from OpenSoftwarePage import OpenSoftwarePage
 from TrialInfoPage import TrialInfoPage
 from DemographicPage import DemographicPage
+from DemonstrationPage import DemonstrationPage
 from PupilCoreEyeSetupPage import PupilCoreEyeSetupPage
 from DisablePupilDetectionPage import DisablePupilDetectionPage
 from CalibrationTutorialPage import CalibrationTutorialPage
@@ -14,6 +15,8 @@ from RecordingPage import RecordingPage
 from RemovePupilCorePage import RemovePupilCorePage
 from PupilHandler import PupilHandler
 from LeapHandler import LeapHandler
+
+import Leap_report as Lr
 
 import logging
 import time
@@ -29,6 +32,8 @@ import numpy as np
 class TrialWizard(Qtw.QWizard):
     def __init__(self, parent=None):
         super(TrialWizard, self).__init__(parent)
+
+        self.setWindowTitle("Reach&Grasp")
 
         self.startingTime = time.strftime("%Y%m%d-%H%M%S")
         self.leap_handler = LeapHandler("CallbackSample.exe", self.startingTime)
@@ -61,6 +66,7 @@ class TrialWizard(Qtw.QWizard):
         self.open_software_page_id = self.addPage(OpenSoftwarePage(self))
         self.trial_info_page_id = self.addPage(TrialInfoPage(self))
         demographic_page_id = self.addPage(DemographicPage(self))
+        demonstration_page_id = self.addPage(DemonstrationPage(self))
         pupil_core_eye_setup_page_id = self.addPage(PupilCoreEyeSetupPage(self))
         disable_pupil_detection_page_id = self.addPage(DisablePupilDetectionPage(self))
         self.calibration_tutorial_page_id = self.addPage(CalibrationTutorialPage(self))
@@ -79,8 +85,8 @@ class TrialWizard(Qtw.QWizard):
         self.data = []
 
         self.setGeometry(0,0,700,600)
-        self.setMinimumSize(700,600)
-        self.setMaximumSize(700,600)
+        self.setMinimumSize(700, 800)
+        self.setMaximumSize(700, 800)
 
 
     @Qtc.pyqtSlot(str, float, float, float, bool)
@@ -232,12 +238,12 @@ class TrialWizard(Qtw.QWizard):
 
         # Data
 
-        data_df = pd.DataFrame(self.data, columns=["name", "start", "stop", "timestamp", "is_success"])
+        timestamps_data_df = pd.DataFrame(self.data, columns=["name", "start", "stop", "timestamp", "is_success"])
 
         # tone_timestamps_df.columns = ["recording", "timestamp"]
 
         for drive in self.drives:
-            data_df.to_csv(drive + path + filename + '_tone_timestamps.csv')
+            timestamps_data_df.to_csv(drive + path + filename + '_timestamps.csv')
 
         # Leap timestamps
 
@@ -246,6 +252,7 @@ class TrialWizard(Qtw.QWizard):
         for drive in self.drives:
             shutil.copyfile(leap_timestamps, drive + path + filename + "_leap_timestamps.csv")
 
+        leap_timestamps_df = pd.read_csv(leap_timestamps)
 
         os.remove(leap_timestamps)
 
@@ -256,72 +263,29 @@ class TrialWizard(Qtw.QWizard):
         for drive in self.drives:
             shutil.copyfile(leap_data, drive + path + filename + "_leap_data.csv")
 
+        leap_data_df = pd.read_csv(leap_data)
+
         os.remove(leap_data)
 
         # Create report
 
-        # try:
-        #     shutil.rmtree("report")
-        #     os.mkdir("report")
-        # except FileNotFoundError:
-        #     os.mkdir("report")
-        #
-        # timestamps = self.page(self.Page_Recording).tone_timestamps
-        #
-        # leap_timestamps = self.page(self.Page_Recording).leap_timestamps
-        #
-        # for recording in self.page(self.Page_Recording).leap_recordings:
-        #
-        #     if os.path.exists(recording):
-        #
-        #         leap_df = pd.read_csv(recording)
-        #
-        #         for drive in self.drives:
-        #             shutil.copyfile(recording, drive + path + filename + '_' + recording.split('\\')[-1])
-        #
-        #         while (os.path.exists(recording)):
-        #             try:
-        #                 os.remove(recording)
-        #             except:
-        #                 logging.warning("Unable to remove {}".format(recording))
-        #
-        #         try:
-        #             name = recording.split('\\')[-1]
-        #             name = name.split('.')[0]
-        #             name = name.replace('_leap', "")
-        #
-        #             auditory_tone_obj = timestamps[name]
-        #             auditory_tone_seconds = (auditory_tone_obj - datetime(1970, 1, 1)).total_seconds()
-        #
-        #             leap, system = leap_timestamps[name]
-        #
-        #             auditory_tone_seconds = auditory_tone_seconds - float(system)
-        #
-        #             leap_seconds = int(leap) / (10 ** 6)
-        #
-        #             leap_df['timestamp'] = (leap_df['timestamp'] / (10 ** 6)) - leap_seconds
-        #
-        #             leap_min = leap_df['timestamp'].min()
-        #
-        #             if leap_min > 0:
-        #                 leap_df['timestamp'] = leap_df['timestamp'] - leap_min
-        #                 auditory_tone_seconds = auditory_tone_seconds - leap_min
-        #
-        #             leap_df['distance'] = leap_df[['palm_position_x', 'palm_position_y', 'palm_position_z']].apply(
-        #                 np.linalg.norm, axis=1)
-        #
-        #             new_filename = "report/" + name
-        #
-        #             # plot_distance(name, leap_df, auditory_tone_seconds, new_filename)
-        #         except:
-        #             logging.error("Could not create graph for {}".format(recording))
-        #         else:
-        #             logging.info("Created graph for {}".format(recording))
+        try:
+            shutil.rmtree("report")
+            os.mkdir("report")
+        except FileNotFoundError:
+            os.mkdir("report")
 
-        # for drive in self.drives:
-        #     shutil.copytree("report/", drive + path + "report\\")
-        #
-        # shutil.rmtree("report/")
+        try:
+            Lr.save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, intro["handedness"])
+        except:
+            logging.warning("Unable to save report")
+        else:
+            logging.info("Successfully created report")
+
+        for drive in self.drives:
+            shutil.copytree("report/", drive + path + "report\\")
+
+        shutil.rmtree("report/")
 
         # Pupil Core
 

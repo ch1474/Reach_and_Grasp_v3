@@ -21,6 +21,10 @@ class CalibrationPage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
+        page_title = Qtw.QLabel("8. Calibration and validation")
+        page_title_font = Qtg.QFont('Times', 15)
+        page_title.setFont(page_title_font)
+
         self.calibration_1_label = Qtw.QLabel("Calibration 1:")
         self.calibration_1_push_button = Qtw.QPushButton("Start")
         self.calibration_1_push_button.setCheckable(True)
@@ -37,6 +41,8 @@ class CalibrationPage(Qtw.QWizardPage):
         self.validation_push_button.clicked.connect(lambda: self.pushbutton("Validation", self.validation_push_button))
 
         page_layout = Qtw.QVBoxLayout()
+        page_layout.setSpacing(15)
+        page_layout.addWidget(page_title)
         page_layout.addWidget(self.calibration_1_label)
         page_layout.addWidget(self.calibration_1_push_button)
         page_layout.addWidget(self.calibration_2_label)

@@ -45,17 +45,17 @@ class PupilCoreEyeSetupPage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
-        page_title = Qtw.QLabel("Pupil Detection")
-        page_title_font = Qtg.QFont('Times', 20)
-        page_title_font.setBold(True)
+        page_title = Qtw.QLabel("5. Checking pupil detection")
+        page_title_font = Qtg.QFont('Times', 15)
         page_title.setFont(page_title_font)
-        page_text =  "Capturing good raw videos of the eyes is essential for successful eye tracking with " \
-                     "Pupil Core.\n\nThis page details how to physically adjust the eye cameras on your Pupil Core " \
-                     "headset to get good images of the eyes."
 
+        page_text =  "Please place the Pupil Core on the patient. Capturing good raw videos of the eyes is essential " \
+                     "for successful eye tracking with the " \
+                     "Pupil Core.\n\nThis page details how to physically adjust the eye cameras on the Pupil Core " \
+                     "headset to get good images of the eyes."
         page_text_label = Qtw.QLabel(page_text, wordWrap=True)
 
-        pupil_detection_text = "Take a look at the eye window(s).\n\nPupil Core " \
+        pupil_detection_text = "Take a look at the eye windows.\n\nPupil Core " \
                                "uses a 3D model of the eye to improve the pupil detection. Adjust the eye cameras " \
                                "such that your pupil is always visible, even when looking at extreme angles."
 
@@ -66,16 +66,16 @@ class PupilCoreEyeSetupPage(Qtw.QWizardPage):
                                         'fit your eye ball.</b> If everything is set up properly, you should see a ' \
                                         'green ' \
                                         'circle around the eye ball and a red circle around the pupil with a red dot ' \
-                                        'in the center.</p><p>Next, check the world window.</p><p>You will see confidence ' \
+                                        'in the center (colours vary with software versions).</p><p>Next, check the world window.</p><p>You will see confidence ' \
                                         'graphs ' \
                                         'in the top for each eye. 1.0 = high confidence pupil detection. 0.0 = no ' \
                                         'confidence.</p>'
 
         self.pupil_detection_more_text = Qtw.QLabel(pupil_detection_extended_text, wordWrap=True)
 
-        pupil_adjustments = Qtw.QLabel("Pupil Adjustments")
+        pupil_adjustments = Qtw.QLabel("Pupil Core Adjustments")
         pupil_adjustments_font = Qtg.QFont('Times', 15)
-        pupil_adjustments_font.setBold(True)
+        #pupil_adjustments_font.setBold(True)
         pupil_adjustments.setFont(pupil_adjustments_font)
 
         arm_text = "The eye camera arm slides in and out of the headset frame. You can slide the eye camera arm along the track."
@@ -121,9 +121,7 @@ class PupilCoreEyeSetupPage(Qtw.QWizardPage):
 
 
         self.page_layout = Qtw.QVBoxLayout()
-        #self.page_layout.addLayout(self.pupil_detection_gif)
-        #self.page_layout.addWidget(self.pupil_detection_more_text)
-        # self.page_layout.addWidget(pupil_adjustments)
+        self.page_layout.setSpacing(15)
         self.page_layout.addWidget(page_title)
         self.page_layout.addWidget(page_text_label)
         self.page_layout.addWidget(self.adjustments_scroll)
