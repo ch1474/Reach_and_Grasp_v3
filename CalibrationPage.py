@@ -5,6 +5,8 @@ from PyQt5 import QtMultimedia as Qtmm
 from PyQt5 import QtMultimediaWidgets as Qtmmw
 
 import time
+import logging
+
 
 class CalibrationPage(Qtw.QWizardPage):
     """
@@ -73,6 +75,7 @@ class CalibrationPage(Qtw.QWizardPage):
 
 
     def pushbutton(self, type, button):
+        logging.info(type + "button pressed")
 
         if button.isChecked():
             if self.start_time is not None:
@@ -86,12 +89,16 @@ class CalibrationPage(Qtw.QWizardPage):
             ret = self.continue_message_box.question(self, "Continue?", type + " successful?")
 
             if ret == self.continue_message_box.Yes:
+                logging.info(type + "successful.")
+
                 # emit signal
                 button.setText("Done!")
                 button.setDisabled(True)
 
                 self.data_sig.emit(type, self.start_time, stop_time, 0.0, True)
             else:
+                logging.info(type + "not successful.")
+
                 self.data_sig.emit(type, self.start_time, stop_time, 0.0, False)
 
             self.start_time = None

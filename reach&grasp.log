@@ -266,3 +266,13 @@
 09/16/2021 10:52:51 AM INFO:Copying C:\Users\Cam\recordings\20210916-105021 to drive C:\
 09/16/2021 10:52:51 AM INFO:Copying C:\Users\Cam\recordings\20210916-105021 to drive E:\
 09/16/2021 10:52:51 AM INFO:Successfully saved all recordings
+09/16/2021 07:44:11 PM INFO:Starting application
+09/16/2021 07:44:12 PM INFO:reading config file
+09/16/2021 07:44:12 PM INFO:Successfully read configuration file
+09/16/2021 07:44:46 PM INFO:Start recording, reply: OK
+09/16/2021 07:45:26 PM INFO:Stop recording, reply: OK
+09/16/2021 07:45:34 PM WARNING:Unable to save report
+09/16/2021 07:45:34 PM INFO:Found recording C:\Users\Cam\recordings\20210916-194411
+09/16/2021 07:45:34 PM INFO:Copying C:\Users\Cam\recordings\20210916-194411 to drive C:\
+09/16/2021 07:45:34 PM INFO:Copying C:\Users\Cam\recordings\20210916-194411 to drive E:\
+09/16/2021 07:45:34 PM INFO:Successfully saved all recordings

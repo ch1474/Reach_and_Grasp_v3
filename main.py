@@ -16,7 +16,7 @@ from RemovePupilCorePage import RemovePupilCorePage
 from PupilHandler import PupilHandler
 from LeapHandler import LeapHandler
 
-import Leap_report as Lr
+import LeapReport as Lr
 
 import logging
 import time
@@ -35,8 +35,14 @@ class TrialWizard(Qtw.QWizard):
 
         self.setWindowTitle("Reach&Grasp")
 
+        try:
+            shutil.rmtree("temp_recordings")
+            os.mkdir("temp_recordings")
+        except FileNotFoundError:
+            os.mkdir("temp_recordings")
+
         self.startingTime = time.strftime("%Y%m%d-%H%M%S")
-        self.leap_handler = LeapHandler("CallbackSample.exe", self.startingTime)
+        self.leap_handler = LeapHandler("CallbackSample.exe", "temp_recordings/" + self.startingTime)
         self.pupil_handler = PupilHandler()
 
         self.setWizardStyle(Qtw.QWizard.ModernStyle)
@@ -108,7 +114,6 @@ class TrialWizard(Qtw.QWizard):
         if os.path.exists("config.ini"):
 
             try:
-
                 logging.info("reading config file")
                 config = configparser.ConfigParser()
                 config.read("config.ini")
@@ -116,7 +121,6 @@ class TrialWizard(Qtw.QWizard):
                 self.local_drive = config['PATH']['Local']
                 self.external_drive = config['PATH']['External']
                 self.folder_name = config['PATH']['Folder name']
-                self.leap_path = config['PATH']['leap path']
 
             except:
                 logging.error("Error reading configuration file")
@@ -247,7 +251,7 @@ class TrialWizard(Qtw.QWizard):
 
         # Leap timestamps
 
-        leap_timestamps = self.startingTime + "_leap_timestamps.csv"
+        leap_timestamps = "temp_recordings/" + self.startingTime + "_leap_timestamps.csv"
 
         for drive in self.drives:
             shutil.copyfile(leap_timestamps, drive + path + filename + "_leap_timestamps.csv")
@@ -258,7 +262,7 @@ class TrialWizard(Qtw.QWizard):
 
         # Leap motion data
 
-        leap_data = self.startingTime + "_leap_data.csv"
+        leap_data = "temp_recordings/" + self.startingTime + "_leap_data.csv"
 
         for drive in self.drives:
             shutil.copyfile(leap_data, drive + path + filename + "_leap_data.csv")

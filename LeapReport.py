@@ -12,6 +12,7 @@ import cv2
 
 from scipy.signal import savgol_filter
 
+import logging
 
 def interpolate_leap_for_timestamps(leap_df, timestamps):
     """
@@ -26,13 +27,13 @@ def interpolate_leap_for_timestamps(leap_df, timestamps):
 
     """
 
+    logging.info("Interpolating leap for timestamps")
     # Make a copy of the data as we are going to be making changes
 
     leap_interpolation_df = leap_df.copy(deep=True)
 
     # 1. Split by hand_id. Each hand_id is a continuous time that the time has been active
     # 2. Find which timestamps occur within each group.
-
 
     leap_hand_id_df = leap_interpolation_df.groupby(by="hand_id")
 
@@ -89,6 +90,9 @@ def plot_leap_with_timestamp(fig, data, timestamp):
                     leap_df (pandas dataframe): Interpolated data.
 
     """
+    logging.info("Plot leap with timestamps")
+
+
     ax = fig.add_subplot(111, projection='3d')
 
     ax.set_xlim3d(-300, 150)
@@ -129,6 +133,9 @@ def make_leap_video(filename, framerate, data, timestamps):
                     None
     """
 
+    logging.info("making leap video")
+
+
     # For each timestamp there is either hand data or there isn't.
     # But for each we need to create a frame anyway.
 
@@ -159,6 +166,9 @@ def make_leap_video(filename, framerate, data, timestamps):
 
 
 def plot_leap(ax, leap_timestamps, leap_column, tone_timestamp, y_label):
+
+    logging.info("plotting leap")
+
     arrowprops = {'width': 1, 'headwidth': 1, 'headlength': 1, 'shrink': 0.05}
 
     ax.plot(leap_timestamps, leap_column, color='black')
@@ -179,6 +189,9 @@ def plot_leap(ax, leap_timestamps, leap_column, tone_timestamp, y_label):
 
 def create_plot(filename, name, leap_df, tone_timestamp):
 
+    logging.info("creating plot")
+
+
     fig, axes = plt.subplots(3, 1)
     fig.set_size_inches(15, 20, forward=True)
 
@@ -197,6 +210,9 @@ def create_plot(filename, name, leap_df, tone_timestamp):
 
 
 def datetime_string_to_epoch(datetime_string):
+
+    logging.info("datetime string to epoch")
+
     system_timestamp_utc = dt.datetime.fromisoformat(datetime_string)
 
     epoch = dt.datetime.utcfromtimestamp(0)
@@ -207,6 +223,9 @@ handedness = "right"
 
 
 def save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, handedness):
+
+    logging.info("saving report")
+
 
     handedness = handedness.lower()
 
