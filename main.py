@@ -35,15 +35,17 @@ class TrialWizard(Qtw.QWizard):
 
         self.setWindowTitle("Reach&Grasp")
 
+
+
+        self.startingTime = time.strftime("%Y%m%d-%H%M%S")
+        self.leap_handler = LeapHandler("CallbackSample.exe", "temp_recordings/" + self.startingTime)
+        self.pupil_handler = PupilHandler()
+
         try:
             shutil.rmtree("temp_recordings")
             os.mkdir("temp_recordings")
         except FileNotFoundError:
             os.mkdir("temp_recordings")
-
-        self.startingTime = time.strftime("%Y%m%d-%H%M%S")
-        self.leap_handler = LeapHandler("CallbackSample.exe", "temp_recordings/" + self.startingTime)
-        self.pupil_handler = PupilHandler()
 
         self.setWizardStyle(Qtw.QWizard.ModernStyle)
         self.setPixmap(Qtw.QWizard.LogoPixmap, Qtg.QPixmap('images/clearsky-logo.png'))
