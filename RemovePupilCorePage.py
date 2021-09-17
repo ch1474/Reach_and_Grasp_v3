@@ -19,8 +19,6 @@ class RemovePupilCorePage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
-        self.stop_pupil_recording.emit()
-
         page_title = Qtw.QLabel("10. Remove pupil core")
         page_title_font = Qtg.QFont('Times', 15)
         page_title.setFont(page_title_font)
@@ -39,6 +37,11 @@ class RemovePupilCorePage(Qtw.QWizardPage):
         page_layout.addWidget(page_image_label)
 
         self.setLayout(page_layout)
+
+    def validatePage(self) -> bool:
+        self.stop_pupil_recording.emit()
+
+        return True
 
 if __name__ == "__main__":
     app = Qtw.QApplication([])
