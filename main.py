@@ -282,7 +282,7 @@ class TrialWizard(Qtw.QWizard):
             os.mkdir("report")
 
         try:
-            Lr.save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, intro["handedness"])
+            Lr.save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, intro["handedness"].lower())
         except:
             logging.warning("Unable to save report")
         else:

@@ -54,8 +54,8 @@ def interpolate_leap_for_timestamps(leap_df, timestamps):
         min_timestamp = group['timestamp'].min()
         max_timestamp = group['timestamp'].max()
 
-        timestamps_df = timestamps_df[(timestamps_df['timestamp'] >= min_timestamp) &
-                                      (timestamps_df['timestamp'] <= max_timestamp)]
+        timestamps_df = timestamps_df[(timestamps_df['timestamp'] >= min_timestamp)]
+        timestamps_df = timestamps_df[(timestamps_df['timestamp'] <= max_timestamp)]
 
         # Concatenate the two dataframes together, and sort it into a format that is ready for
         # interpolation.
@@ -72,7 +72,7 @@ def interpolate_leap_for_timestamps(leap_df, timestamps):
 
         group[interpolated_group.columns] = interpolated_group  # Brings in interpolated data
 
-        group = group.reindex(pd.Index(timestamps_df['timestamp']))  # Remove original data
+        #group = group.reindex(pd.Index(timestamps_df['timestamp']))  # Remove original data
 
         interpolated_dfs.append(group)  # This is repeated for each instance of a hand
 
@@ -175,28 +175,35 @@ def plot_leap(ax, leap_timestamps, leap_column, tone_timestamp, y_label):
 
     ymin, ymax = ax.get_ylim()
 
+
     ax.axvline(tone_timestamp, alpha=0.5, color='black', label='Auditory tone',
                dashes=(5, 2, 1, 2))
     ax.annotate('Auditory tone', xy=(tone_timestamp, ymax * 0.4), xytext=(-10, 25),
                 textcoords='offset points',
                 rotation=0, va='bottom', ha='right', annotation_clip=True, arrowprops=arrowprops, backgroundcolor="w")
 
+
     ax.grid(color='#F2F2F2', alpha=1, zorder=0)
-    ax.set_xticks(np.arange(0, leap_timestamps.max() + 1, step=1))
+
+
+    #ax.set_xticks(np.arange(0, leap_timestamps.max() + 1, step=1))
     ax.set_xlabel('Time ($s$)')
+
     ax.set_ylabel(y_label)
+
+
+
 
 
 def create_plot(filename, name, leap_df, tone_timestamp):
 
     logging.info("creating plot")
 
-
     fig, axes = plt.subplots(3, 1)
     fig.set_size_inches(15, 20, forward=True)
 
     ax_0 = axes[0]
-    plot_leap(ax_0, leap_df['timestamp'], leap_df['eculidean_distance'], tone_timestamp, "Distance ($mm$)")
+    plot_leap(ax_0, leap_df['timestamp'], leap_df['euclidean_distance'], tone_timestamp, "Distance ($mm$)")
 
     ax_1 = axes[1]
     plot_leap(ax_1, leap_df['timestamp'], leap_df['velocity'], tone_timestamp, "Speed ($mm$ $s^{-1}$)")
@@ -253,8 +260,6 @@ def save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, handedness
 
     leap_data_df['euclidean_distance'] = savgol_filter(leap_data_df['euclidean_distance'] , 33, 3)
 
-    timestamps_data_df = pd.read_csv("20210916-105021_test_17_tone_timestamps.csv", index_col=0)
-
     # Only successful recordings
     timestamps_data_df = timestamps_data_df[timestamps_data_df["is_success"] == True]
 
@@ -264,30 +269,36 @@ def save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, handedness
     # Remove Calibration and validation recordings
     timestamps_data_df = timestamps_data_df.filter(like='Reach and Grasp', axis=0)
 
-
     for name, row in timestamps_data_df.iterrows():
         start_timestamp = row['start']
         stop_timestamp = row['stop']
         tone_timestamp = row['timestamp']
 
-        current_recording_df = leap_data_df[(leap_data_df['timestamp'] >= start_timestamp) and
-                                            leap_data_df['timestamp'] <= stop_timestamp]
+        current_recording_df = leap_data_df[(leap_data_df['timestamp'] >= start_timestamp)].copy(deep=True)
+
+        current_recording_df = current_recording_df[(current_recording_df['timestamp'] <= stop_timestamp)]
 
         create_plot("report/" + name + ".png", name, current_recording_df, tone_timestamp)
-
         # Create an array of timestamps at a consistent framerate.
 
-        framerate = 24
+        # framerate = 24
+        #
+        # video_timestamps = []
+        #
+        # timestamp = current_recording_df['timestamp'].min()
+        # while timestamp <= current_recording_df['timestamp'].max():
+        #     video_timestamps.append(timestamp)
+        #     timestamp += 1 / framerate
+        #
+        # video_leap_df = interpolate_leap_for_timestamps(leap_data_df, video_timestamps)
+        #
+        # make_leap_video("report/" + name + ".mp4", 24, video_leap_df, video_timestamps)
 
-        video_timestamps = []
 
-        timestamp = current_recording_df['timestamp'].min()
-        while timestamp <= current_recording_df.max():
-            video_timestamps.append(timestamp)
-            timestamp += 1 / framerate
+if __name__ == "__main__":
 
-        video_leap_df = interpolate_leap_for_timestamps(leap_data_df, video_timestamps)
-
-        make_leap_video("report/" + name + ".mp4", 24, video_leap_df, video_timestamps)
-
-
+    handedness = "right"
+    timestamps = pd.read_csv("20210917-170338_te_timestamps.csv")
+    leap_df = pd.read_csv("20210917-170338_te_leap_data.csv")
+    leap_timestamps_df = pd.read_csv("20210917-170338_te_leap_timestamps.csv")
+    save_report(leap_timestamps_df,leap_df,timestamps,handedness)

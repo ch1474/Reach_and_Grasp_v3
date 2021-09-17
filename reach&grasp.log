@@ -452,3 +452,54 @@
 09/17/2021 09:38:39 AM INFO:Starting application
 09/17/2021 09:38:40 AM INFO:reading config file
 09/17/2021 09:38:40 AM INFO:Successfully read configuration file
+09/17/2021 04:53:04 PM INFO:Starting application
+09/17/2021 04:53:05 PM INFO:reading config file
+09/17/2021 04:53:05 PM INFO:Successfully read configuration file
+09/17/2021 04:53:30 PM INFO:Start recording, reply: OK
+09/17/2021 04:53:33 PM INFO:Calibration 1button pressed
+09/17/2021 04:53:34 PM INFO:Calibration 1button pressed
+09/17/2021 04:53:35 PM INFO:Calibration 1successful.
+09/17/2021 04:53:43 PM INFO:Stop recording, reply: OK
+09/17/2021 04:56:50 PM INFO:Starting application
+09/17/2021 04:56:51 PM INFO:reading config file
+09/17/2021 04:56:51 PM INFO:Successfully read configuration file
+09/17/2021 04:57:05 PM INFO:Start recording, reply: OK
+09/17/2021 04:57:22 PM INFO:Stop recording, reply: OK
+09/17/2021 04:58:48 PM INFO:Starting application
+09/17/2021 04:58:49 PM INFO:reading config file
+09/17/2021 04:58:49 PM INFO:Successfully read configuration file
+09/17/2021 04:59:02 PM INFO:Start recording, reply: OK
+09/17/2021 04:59:04 PM INFO:Calibration 1button pressed
+09/17/2021 04:59:06 PM INFO:Calibration 1button pressed
+09/17/2021 04:59:07 PM INFO:Calibration 1successful.
+09/17/2021 04:59:23 PM INFO:Stop recording, reply: OK
+09/17/2021 04:59:27 PM INFO:saving report
+09/17/2021 04:59:27 PM INFO:datetime string to epoch
+09/17/2021 04:59:27 PM WARNING:Unable to save report
+09/17/2021 04:59:27 PM INFO:Found recording C:\Users\Cam\recordings\20210917-165848
+09/17/2021 04:59:27 PM INFO:Copying C:\Users\Cam\recordings\20210917-165848 to drive C:\
+09/17/2021 04:59:27 PM INFO:Copying C:\Users\Cam\recordings\20210917-165848 to drive E:\
+09/17/2021 04:59:27 PM INFO:Successfully saved all recordings
+09/17/2021 04:59:48 PM INFO:Starting application
+09/17/2021 04:59:49 PM INFO:reading config file
+09/17/2021 04:59:49 PM INFO:Successfully read configuration file
+09/17/2021 05:00:04 PM INFO:Start recording, reply: OK
+09/17/2021 05:00:05 PM INFO:Calibration 1button pressed
+09/17/2021 05:00:07 PM INFO:Calibration 1button pressed
+09/17/2021 05:00:08 PM INFO:Calibration 1successful.
+09/17/2021 05:00:09 PM INFO:Calibration 2button pressed
+09/17/2021 05:00:11 PM INFO:Calibration 2button pressed
+09/17/2021 05:00:12 PM INFO:Calibration 2successful.
+09/17/2021 05:00:32 PM INFO:Stop recording, reply: OK
+09/17/2021 05:00:46 PM INFO:saving report
+09/17/2021 05:00:46 PM INFO:datetime string to epoch
+09/17/2021 05:00:46 PM WARNING:Unable to save report
+09/17/2021 05:00:46 PM INFO:Found recording C:\Users\Cam\recordings\20210917-165948
+09/17/2021 05:00:46 PM INFO:Copying C:\Users\Cam\recordings\20210917-165948 to drive C:\
+09/17/2021 05:00:46 PM INFO:Copying C:\Users\Cam\recordings\20210917-165948 to drive E:\
+09/17/2021 05:00:46 PM INFO:Successfully saved all recordings
+09/17/2021 05:01:14 PM INFO:Starting application
+09/17/2021 05:01:15 PM INFO:reading config file
+09/17/2021 05:01:15 PM INFO:Successfully read configuration file
+09/17/2021 05:01:27 PM INFO:Start recording, reply: OK
+09/17/2021 05:01:33 PM INFO:Stop recording, reply: OK
