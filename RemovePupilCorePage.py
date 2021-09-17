@@ -18,7 +18,7 @@ class RemovePupilCorePage(Qtw.QWizardPage):
         self.setTitle("  ")
         self.setSubTitle("  ")
 
-        page_title = Qtw.QLabel("10. Remove Pupil Core")
+        page_title = Qtw.QLabel("10. Remove pupil core")
         page_title_font = Qtg.QFont('Times', 15)
         page_title.setFont(page_title_font)
 

@@ -35,7 +35,7 @@ class TrialWizard(Qtw.QWizard):
 
         self.setWindowTitle("Reach&Grasp")
 
-
+        self.setOption(self.HaveHelpButton, False)
 
         self.startingTime = time.strftime("%Y%m%d-%H%M%S")
         self.leap_handler = LeapHandler("CallbackSample.exe", "temp_recordings/" + self.startingTime)
@@ -95,7 +95,6 @@ class TrialWizard(Qtw.QWizard):
         self.setGeometry(0,0,700,600)
         self.setMinimumSize(700, 800)
         self.setMaximumSize(700, 800)
-
 
     @Qtc.pyqtSlot(str, float, float, float, bool)
     def data_slot(self, data_type, start_timestamp, finish_timestamp, tone_timestamp, is_success):
@@ -172,6 +171,10 @@ class TrialWizard(Qtw.QWizard):
                     Qtw.qApp.quit
 
         self.drives = drives_list
+
+    @Qtc.pyqtSlot()
+    def help(self):
+        print("help")
 
     def nextId(self) -> int:
         # if self.currentId() == self.trial_info_page_id:
@@ -322,6 +325,9 @@ class TrialWizard(Qtw.QWizard):
 
         for drive in self.drives:
             shutil.copyfile(log_file, drive + path + log_file)
+
+
+
 
     @Qtc.pyqtSlot()
     def start_connections(self):
