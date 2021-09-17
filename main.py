@@ -275,23 +275,7 @@ class TrialWizard(Qtw.QWizard):
 
         # Create report
 
-        try:
-            shutil.rmtree("report")
-            os.mkdir("report")
-        except FileNotFoundError:
-            os.mkdir("report")
 
-        try:
-            Lr.save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, intro["handedness"].lower())
-        except:
-            logging.warning("Unable to save report")
-        else:
-            logging.info("Successfully created report")
-
-        for drive in self.drives:
-            shutil.copytree("report/", drive + path + "report\\")
-
-        shutil.rmtree("report/")
 
         # Pupil Core
 
@@ -323,7 +307,23 @@ class TrialWizard(Qtw.QWizard):
         for drive in self.drives:
             shutil.copyfile(log_file, drive + path + log_file)
 
+        try:
+            shutil.rmtree("report")
+            os.mkdir("report")
+        except FileNotFoundError:
+            os.mkdir("report")
 
+        try:
+            Lr.save_report(leap_timestamps_df, leap_data_df, timestamps_data_df, intro["handedness"].lower())
+        except:
+            logging.warning("Unable to save report")
+        else:
+            logging.info("Successfully created report")
+
+        for drive in self.drives:
+            shutil.copytree("report/", drive + path + "report\\")
+
+        shutil.rmtree("report/")
 
 
     @Qtc.pyqtSlot()
