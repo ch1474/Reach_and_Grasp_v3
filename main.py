@@ -80,7 +80,7 @@ class TrialWizard(Qtw.QWizard):
         self.calibration_tutorial_page_id = self.addPage(CalibrationTutorialPage(self))
         self.calibration_page_id = self.addPage(CalibrationPage(self))
         recording_visual_page_id = self.addPage(RecordingPage(self, "Visual "))
-        remove_pupil_core_page_id = self.addPage(RemovePupilCorePage(self))
+        self.remove_pupil_core_page_id = self.addPage(RemovePupilCorePage(self))
         self.recording_memory_page_id = self.addPage(RecordingPage(self, "Memory "))
 
         self.page(self.calibration_page_id).data_sig.connect(self.data_slot)
@@ -89,6 +89,7 @@ class TrialWizard(Qtw.QWizard):
 
         self.page(self.open_software_page_id).start_connection.connect(self.start_connections)
         self.page(self.calibration_tutorial_page_id).start_pupil_recording.connect(self.start_recording)
+        self.page(self.remove_pupil_core_page_id).stop_pupil_recording.connect(self.stop_recording)
 
         self.data = []
 
@@ -172,10 +173,6 @@ class TrialWizard(Qtw.QWizard):
 
         self.drives = drives_list
 
-    @Qtc.pyqtSlot()
-    def help(self):
-        print("help")
-
     def nextId(self) -> int:
         # if self.currentId() == self.trial_info_page_id:
         #     self.pupil_handler.start_connection()
@@ -196,7 +193,7 @@ class TrialWizard(Qtw.QWizard):
         """
         super(TrialWizard, self).accept()
 
-        self.pupil_handler.stop_recording()
+        #self.pupil_handler.stop_recording()
         self.leap_handler.kill_all_open()
 
         participant_id = self.field('intro.participantID')
@@ -336,6 +333,10 @@ class TrialWizard(Qtw.QWizard):
     @Qtc.pyqtSlot()
     def start_recording(self):
         self.pupil_handler.start_recording(self.startingTime)
+
+    @Qtc.pyqtSlot()
+    def stop_recording(self):
+        self.pupil_handler.stop_recording()
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

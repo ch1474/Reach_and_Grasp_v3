@@ -11,12 +11,15 @@ class RemovePupilCorePage(Qtw.QWizardPage):
     In this page the test administrator is advised how to disable Pupil Tracking.
 
     """
+    stop_pupil_recording = Qtc.pyqtSignal()
 
     def __init__(self, parent):
         super(RemovePupilCorePage, self).__init__(parent)
 
         self.setTitle("  ")
         self.setSubTitle("  ")
+
+        self.stop_pupil_recording.emit()
 
         page_title = Qtw.QLabel("10. Remove pupil core")
         page_title_font = Qtg.QFont('Times', 15)
